@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Car Service Management System (CSMS) - Quick and easy scheduling for auto repairs and servicing.">
+    <title>My Registered Cars - CSMS</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                CAR SERVICE MANAGEMENT SYSTEM
+            </a>
+            
+            <ul class="nav-links">
+                
+                    
+                        <li><a href="customer_dashboard.html">Dashboard</a></li>
+                        <li><a href="my_cars.html">My Cars</a></li>
+                        <li><a href="request_service.html">Request Service</a></li>
+                        <li><a href="service_status.html">Service Status</a></li>
+                    
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.html" class="btn-nav">Logout</a></li>
+                
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        <!-- Success and Error Messages Framework -->
+        
+
+        
+<div class="section-header">
+    <h2>My Registered Vehicles</h2>
+    <a href="/cars/add/" class="btn btn-primary btn-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Add Vehicle
+    </a>
+</div>
+
+
+    <div class="cars-grid">
+        
+            <div class="car-card has-img">
+                
+                <img src="static/images/tesla.jpg" alt="Tesla Image" style="width: 100%; height: 160px; object-fit: cover;">
+                
+                <div class="car-card-content">
+                    <div class="car-card-header">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin: 0;">Tesla</h3>
+                        </div>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Model: <strong>Model S</strong></p>
+                    </div>
+                    
+                    <div class="car-card-body" style="margin-bottom: 1.5rem;">
+                        <div style="font-family: monospace; font-size: 1.1rem; background-color: var(--input-bg); padding: 0.5rem; border-radius: 6px; border: 1px solid var(--card-border); text-align: center; font-weight: 600; letter-spacing: 0.05em; color: var(--accent-info);">
+                            KA-01-MJ-5678
+                        </div>
+                    </div>
+
+                    <div class="car-card-footer" style="display: flex; gap: 0.5rem; justify-content: flex-end; border-top: 1px solid var(--card-border); padding-top: 1rem;">
+                        <a href="/cars/edit/81/" class="btn btn-secondary btn-sm" style="flex: 1; gap: 0.25rem;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            Edit
+                        </a>
+                        <a href="/cars/delete/81/" class="btn btn-danger btn-sm" style="flex: 1; gap: 0.25rem;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="car-card has-img">
+                
+                <img src="static/images/bmw.jpg" alt="BMW Image" style="width: 100%; height: 160px; object-fit: cover;">
+                
+                <div class="car-card-content">
+                    <div class="car-card-header">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                            <h3 style="font-size: 1.25rem; font-weight: 700; color: var(--text-main); margin: 0;">BMW</h3>
+                        </div>
+                        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Model: <strong>M3</strong></p>
+                    </div>
+                    
+                    <div class="car-card-body" style="margin-bottom: 1.5rem;">
+                        <div style="font-family: monospace; font-size: 1.1rem; background-color: var(--input-bg); padding: 0.5rem; border-radius: 6px; border: 1px solid var(--card-border); text-align: center; font-weight: 600; letter-spacing: 0.05em; color: var(--accent-info);">
+                            KA-01-AB-1234
+                        </div>
+                    </div>
+
+                    <div class="car-card-footer" style="display: flex; gap: 0.5rem; justify-content: flex-end; border-top: 1px solid var(--card-border); padding-top: 1rem;">
+                        <a href="/cars/edit/82/" class="btn btn-secondary btn-sm" style="flex: 1; gap: 0.25rem;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                            Edit
+                        </a>
+                        <a href="/cars/delete/82/" class="btn btn-danger btn-sm" style="flex: 1; gap: 0.25rem;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                            Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Car Service Management System (CSMS). All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

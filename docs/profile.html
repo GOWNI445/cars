@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Car Service Management System (CSMS) - Quick and easy scheduling for auto repairs and servicing.">
+    <title>My Profile - CSMS</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                CAR SERVICE MANAGEMENT SYSTEM
+            </a>
+            
+            <ul class="nav-links">
+                
+                    
+                        <li><a href="customer_dashboard.html">Dashboard</a></li>
+                        <li><a href="my_cars.html">My Cars</a></li>
+                        <li><a href="request_service.html">Request Service</a></li>
+                        <li><a href="service_status.html">Service Status</a></li>
+                    
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.html" class="btn-nav">Logout</a></li>
+                
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        <!-- Success and Error Messages Framework -->
+        
+
+        
+<div class="section-header">
+    <h2>Edit Profile</h2>
+</div>
+
+<div class="profile-grid">
+    <!-- Left Column: Personal Information -->
+    <div class="card-block">
+        <h3 class="mb-4">Personal Information</h3>
+        <form method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="CtQ7vjwYwDofTf8oVrF4mY7Y47KmsqXSJQgnJ4uswtBpIqNC7BTbDaieLC93EWVQ">
+            <input type="hidden" name="update_profile" value="1">
+            
+            
+                <div class="form-group">
+                    <label for="id_name">Name</label>
+                    <input type="text" name="name" value="John Doe" placeholder="Enter Name" maxlength="255" required id="id_name">
+                    
+                    
+                </div>
+            
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    <input type="email" name="email" value="john@example.com" placeholder="Enter Email" maxlength="254" id="id_email">
+                    
+                    
+                </div>
+            
+                <div class="form-group">
+                    <label for="id_phone">Phone</label>
+                    <input type="text" name="phone" value="1234567890" placeholder="Enter Phone Number" maxlength="15" id="id_phone">
+                    
+                    
+                </div>
+            
+
+            <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+        </form>
+    </div>
+
+    <!-- Right Column: Change Password -->
+    <div class="card-block">
+        <h3 class="mb-4">Change Password</h3>
+        <form method="POST">
+            <input type="hidden" name="csrfmiddlewaretoken" value="CtQ7vjwYwDofTf8oVrF4mY7Y47KmsqXSJQgnJ4uswtBpIqNC7BTbDaieLC93EWVQ">
+            <input type="hidden" name="change_password" value="1">
+            
+            
+                <div class="form-group">
+                    <label for="id_old_password">Old password</label>
+                    <input type="password" name="old_password" autocomplete="current-password" autofocus required id="id_old_password">
+                    
+                    
+                </div>
+            
+                <div class="form-group">
+                    <label for="id_new_password1">New password</label>
+                    <input type="password" name="new_password1" autocomplete="new-password" required aria-describedby="id_new_password1_helptext" id="id_new_password1">
+                    
+                    
+                        <div class="help-text"><ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul></div>
+                    
+                </div>
+            
+                <div class="form-group">
+                    <label for="id_new_password2">New password confirmation</label>
+                    <input type="password" name="new_password2" autocomplete="new-password" required aria-describedby="id_new_password2_helptext" id="id_new_password2">
+                    
+                    
+                        <div class="help-text">Enter the same password as before, for verification.</div>
+                    
+                </div>
+            
+
+            <button type="submit" class="btn btn-primary mt-4">Update Password</button>
+        </form>
+    </div>
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Car Service Management System (CSMS). All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Car Service Management System (CSMS) - Quick and easy scheduling for auto repairs and servicing.">
+    <title>My Service Requests - CSMS</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                CAR SERVICE MANAGEMENT SYSTEM
+            </a>
+            
+            <ul class="nav-links">
+                
+                    
+                        <li><a href="customer_dashboard.html">Dashboard</a></li>
+                        <li><a href="my_cars.html">My Cars</a></li>
+                        <li><a href="request_service.html">Request Service</a></li>
+                        <li><a href="service_status.html">Service Status</a></li>
+                    
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.html" class="btn-nav">Logout</a></li>
+                
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        <!-- Success and Error Messages Framework -->
+        
+
+        
+<div class="section-header">
+    <h2>Service Request History</h2>
+    <a href="request_service.html" class="btn btn-primary btn-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        New Request
+    </a>
+</div>
+
+<!-- Filters & Sorting Bar -->
+<div class="card-block" style="padding: 1.25rem; margin-bottom: 1.5rem;">
+    <form method="GET" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Filter Status</label>
+            <select name="status" class="form-group" style="width: 100%; margin: 0; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+                <option value="">All Statuses</option>
+                <option value="Pending" >Pending</option>
+                <option value="In Progress" >In Progress</option>
+                <option value="Completed" >Completed</option>
+                <option value="Cancelled" >Cancelled</option>
+            </select>
+        </div>
+
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Filter by Vehicle</label>
+            <select name="car" class="form-group" style="width: 100%; margin: 0; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+                <option value="">All Vehicles</option>
+                
+                    <option value="81" >Tesla Model S</option>
+                
+                    <option value="82" >BMW M3</option>
+                
+            </select>
+        </div>
+        
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Sort By Date</label>
+            <select name="sort" class="form-group" style="width: 100%; margin: 0; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+                <option value="newest" selected>Newest First</option>
+                <option value="oldest" >Oldest First</option>
+            </select>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.5rem; height: 42px;">Apply</button>
+            <a href="service_status.html" class="btn btn-secondary" style="padding: 0.6rem 1.5rem; height: 42px;">Reset</a>
+        </div>
+    </form>
+</div>
+
+<div class="card-block">
+    
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Car Details</th>
+                        <th>Service Type</th>
+                        <th>Preferred Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                            <td>#48</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/bmw.jpg" alt="BMW" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">BMW M3</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--accent-info); display: block; margin-top: 0.1rem;">KA-01-AB-1234</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                Brake Pads Replacement
+                                
+                                
+                            </td>
+                            <td>Aug. 16, 2026</td>
+                            <td>
+                                <span class="badge badge-in progress">In Progress</span>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>#47</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/tesla.jpg" alt="Tesla" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">Tesla Model S</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--accent-info); display: block; margin-top: 0.1rem;">KA-01-MJ-5678</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                Battery Health Check
+                                
+                                
+                            </td>
+                            <td>Aug. 18, 2026</td>
+                            <td>
+                                <span class="badge badge-pending">Pending</span>
+                            </td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Car Service Management System (CSMS). All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

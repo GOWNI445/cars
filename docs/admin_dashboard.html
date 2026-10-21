@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Car Service Management System (CSMS) - Quick and easy scheduling for auto repairs and servicing.">
+    <title>Admin Dashboard - CSMS</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                CAR SERVICE MANAGEMENT SYSTEM
+            </a>
+            
+            <ul class="nav-links">
+                
+                    
+                        <li><a href="admin_dashboard.html">Dashboard</a></li>
+                        <li><a href="admin_customers.html">Customers</a></li>
+                        <li><a href="admin_cars.html">Cars</a></li>
+                        <li><a href="admin_service_requests.html">Requests</a></li>
+                        <li><a href="customer_dashboard.html" style="color: var(--accent-success); font-weight: bold;">Admin View</a></li>
+                    
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.html" class="btn-nav">Logout</a></li>
+                
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        <!-- Success and Error Messages Framework -->
+        
+
+        
+<div class="section-header">
+    <h2>Admin Dashboard</h2>
+    <p style="color: var(--text-muted);">Signed in as administrator: <strong>System Admin</strong></p>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <div class="stat-card info">
+        <div class="stat-icon-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="stat-label">Total Customers</div>
+        <div class="stat-value">7</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+        </div>
+        <div class="stat-label">Total Cars</div>
+        <div class="stat-value">10</div>
+    </div>
+    <div class="stat-card warning">
+        <div class="stat-icon-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="stat-label">Pending Requests</div>
+        <div class="stat-value">2</div>
+    </div>
+    <div class="stat-card info">
+        <div class="stat-icon-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="stat-label">In Progress</div>
+        <div class="stat-value">4</div>
+    </div>
+    <div class="stat-card success">
+        <div class="stat-icon-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="stat-label">Completed Requests</div>
+        <div class="stat-value">2</div>
+    </div>
+</div>
+
+<!-- Charts Section -->
+<div class="dashboard-charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+    <!-- Pie Chart Card -->
+    <div class="card-block" style="display: flex; flex-direction: column; align-items: center; padding: 1.75rem; border-radius: 16px; margin: 0; background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.7) 100%);">
+        <h3 style="margin-bottom: 1.5rem; align-self: flex-start; font-size: 1.25rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+            📊 Service Request Statuses
+        </h3>
+        <div style="position: relative; height: 260px; width: 100%; max-width: 320px;">
+            <canvas id="statusPieChart"></canvas>
+        </div>
+    </div>
+    
+    <!-- Bar Chart Card -->
+    <div class="card-block" style="display: flex; flex-direction: column; align-items: center; padding: 1.75rem; border-radius: 16px; margin: 0; background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.7) 100%);">
+        <h3 style="margin-bottom: 1.5rem; align-self: flex-start; font-size: 1.25rem; font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 0.5rem;">
+            📈 System Metrics Overview
+        </h3>
+        <div style="position: relative; height: 260px; width: 100%;">
+            <canvas id="metricsBarChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <!-- Recent Requests -->
+    <div class="card-block recent-activities">
+        <div class="d-flex justify-between align-center mb-4">
+            <h3>Recent Requests (Status Updates)</h3>
+            <a href="admin_service_requests.html" style="color: var(--accent-primary); font-size: 0.9rem; font-weight: 500;">View All Requests</a>
+        </div>
+        
+        
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Customer</th>
+                            <th>Car</th>
+                            <th>Service</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                            <tr>
+                                <td>#52</td>
+                                <td>Indu</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        
+                                        <img src="static/images/bmw.jpg" alt="BMW" style="width: 50px; height: 35px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                        <span>BMW Model Y</span>
+                                    </div>
+                                </td>
+                                <td>Oil Change</td>
+                                <td><span class="badge badge-pending">Pending</span></td>
+                                <td>
+                                    <a href="/services/admin/requests/52/update/" class="btn btn-secondary btn-sm">Update</a>
+                                </td>
+                            </tr>
+                        
+                            <tr>
+                                <td>#51</td>
+                                <td>Indu</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        
+                                        <img src="static/images/bmw.jpg" alt="BMW" style="width: 50px; height: 35px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                        <span>BMW Model Y</span>
+                                    </div>
+                                </td>
+                                <td>Tyre Replacement</td>
+                                <td><span class="badge badge-in progress">In Progress</span></td>
+                                <td>
+                                    <a href="/services/admin/requests/51/update/" class="btn btn-secondary btn-sm">Update</a>
+                                </td>
+                            </tr>
+                        
+                            <tr>
+                                <td>#50</td>
+                                <td>reddy</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        
+                                        <img src="static/images/bmw.jpg" alt="BMW" style="width: 50px; height: 35px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                        <span>BMW Model Y</span>
+                                    </div>
+                                </td>
+                                <td>Oil Change</td>
+                                <td><span class="badge badge-in progress">In Progress</span></td>
+                                <td>
+                                    <a href="/services/admin/requests/50/update/" class="btn btn-secondary btn-sm">Update</a>
+                                </td>
+                            </tr>
+                        
+                            <tr>
+                                <td>#49</td>
+                                <td>Jane Smith</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        
+                                        <img src="static/images/toyota.jpg" alt="Toyota" style="width: 50px; height: 35px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                        <span>Toyota Supra</span>
+                                    </div>
+                                </td>
+                                <td>Regular Maintenance &amp; Oil Change</td>
+                                <td><span class="badge badge-completed">Completed</span></td>
+                                <td>
+                                    <a href="/services/admin/requests/49/update/" class="btn btn-secondary btn-sm">Update</a>
+                                </td>
+                            </tr>
+                        
+                            <tr>
+                                <td>#48</td>
+                                <td>John Doe</td>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                        
+                                        <img src="static/images/bmw.jpg" alt="BMW" style="width: 50px; height: 35px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                        <span>BMW M3</span>
+                                    </div>
+                                </td>
+                                <td>Brake Pads Replacement</td>
+                                <td><span class="badge badge-in progress">In Progress</span></td>
+                                <td>
+                                    <a href="/services/admin/requests/48/update/" class="btn btn-secondary btn-sm">Update</a>
+                                </td>
+                            </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        
+    </div>
+
+    <!-- Quick Links -->
+    <div class="card-block quick-actions">
+        <h3>Quick Navigation</h3>
+        <div class="action-buttons">
+            <a href="admin_customers.html" class="btn btn-secondary btn-block">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                View All Customers
+            </a>
+            <a href="admin_cars.html" class="btn btn-secondary btn-block">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                View All Cars
+            </a>
+            <a href="admin_service_requests.html" class="btn btn-secondary btn-block">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                View All Requests
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js and Dashboard Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Color Scheme matches CSS Variables
+        const colors = {
+            purple: '#6366f1',
+            blue: '#0ea5e9',
+            orange: '#f59e0b',
+            green: '#10b981',
+            text: '#cbd5e1',
+            gridLines: 'rgba(255, 255, 255, 0.08)'
+        };
+
+        // 1. Doughnut Chart for Request Statuses
+        const pieCtx = document.getElementById('statusPieChart').getContext('2d');
+        new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Pending', 'In Progress', 'Completed'],
+                datasets: [{
+                    data: [2, 4, 2],
+                    backgroundColor: [colors.orange, colors.blue, colors.green],
+                    borderWidth: 2,
+                    borderColor: '#1e293b',
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 1500,
+                    easing: 'easeOutQuart'
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: colors.text,
+                            font: { family: 'Outfit', size: 12, weight: '500' },
+                            padding: 15
+                        }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+
+        // 2. Bar Chart for Metrics Overview
+        const barCtx = document.getElementById('metricsBarChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Customers', 'Registered Cars', 'Total Requests'],
+                datasets: [{
+                    label: 'System Count',
+                    data: [7, 10, 8],
+                    backgroundColor: [colors.purple, colors.blue, '#a855f7'],
+                    borderRadius: 8,
+                    borderWidth: 0,
+                    barThickness: 32
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 1800,
+                    easing: 'easeOutElastic'
+                },
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { 
+                            color: colors.text, 
+                            font: { family: 'Outfit', size: 11, weight: '500' } 
+                        }
+                    },
+                    y: {
+                        grid: { color: colors.gridLines },
+                        ticks: { 
+                            color: colors.text, 
+                            font: { family: 'Outfit', size: 11 },
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Car Service Management System (CSMS). All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

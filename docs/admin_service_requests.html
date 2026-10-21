@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Car Service Management System (CSMS) - Quick and easy scheduling for auto repairs and servicing.">
+    <title>All Service Requests - CSMS Admin</title>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container navbar">
+            <a href="index.html" class="brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                CAR SERVICE MANAGEMENT SYSTEM
+            </a>
+            
+            <ul class="nav-links">
+                
+                    
+                        <li><a href="admin_dashboard.html">Dashboard</a></li>
+                        <li><a href="admin_customers.html">Customers</a></li>
+                        <li><a href="admin_cars.html">Cars</a></li>
+                        <li><a href="admin_service_requests.html">Requests</a></li>
+                        <li><a href="customer_dashboard.html" style="color: var(--accent-success); font-weight: bold;">Admin View</a></li>
+                    
+                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="index.html" class="btn-nav">Logout</a></li>
+                
+            </ul>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container">
+        <!-- Success and Error Messages Framework -->
+        
+
+        
+<div class="section-header">
+    <h2>Service Request Registry</h2>
+
+</div>
+
+<!-- Advanced Search & Filter Bar -->
+<div class="card-block" style="padding: 1.5rem; margin-bottom: 2rem;">
+    <form method="GET" style="display: flex; flex-direction: column; gap: 1rem;">
+        
+        <!-- Row 1: Search Query -->
+        <div style="display: flex; gap: 1rem; align-items: flex-end;">
+            <div style="flex: 1;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Search Requests</label>
+                <input type="text" name="q" value="" placeholder="Search by customer name or car register plate number..." style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.5rem; height: 42px;">Apply Search</button>
+        </div>
+
+        <!-- Row 2: Filtering Controls -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+            <div style="flex: 1; min-width: 160px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Filter Status</label>
+                <select name="status" style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); height: 42px;">
+                    <option value="">All Statuses</option>
+                    
+                        <option value="Pending" >Pending</option>
+                    
+                        <option value="In Progress" >In Progress</option>
+                    
+                        <option value="Completed" >Completed</option>
+                    
+                        <option value="Cancelled" >Cancelled</option>
+                    
+                </select>
+            </div>
+            
+            <div style="flex: 1; min-width: 160px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Service Type</label>
+                <select name="service_type" style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); height: 42px;">
+                    <option value="">All Services</option>
+                    
+                        <option value="Oil Change" >Oil Change</option>
+                    
+                        <option value="Tyre Replacement" >Tyre Replacement</option>
+                    
+                        <option value="General Checkup" >General Checkup</option>
+                    
+                        <option value="Engine Repair" >Engine Repair</option>
+                    
+                        <option value="Other" >Other</option>
+                    
+                </select>
+            </div>
+
+            <div style="flex: 1; min-width: 140px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Start Date</label>
+                <input type="date" name="start_date" value="" style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); height: 42px;">
+            </div>
+
+            <div style="flex: 1; min-width: 140px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">End Date</label>
+                <input type="date" name="end_date" value="" style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); height: 42px;">
+            </div>
+
+            <div style="display: flex; gap: 0.5rem;">
+                <a href="admin_service_requests.html" class="btn btn-secondary" style="padding: 0.6rem 1.5rem; height: 42px;">Reset Filters</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="card-block">
+    
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Car Details</th>
+                        <th>Service Details</th>
+                        <th>Request Date</th>
+                        <th style="text-align: center;">Status</th>
+                        <th style="text-align: right; min-width: 180px;">Change Status</th>
+                        <th style="text-align: right; min-width: 200px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                        <tr>
+                            <td>#52</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="/services/admin/customers/16/" style="color: var(--accent-primary); hover: underline;">
+                                    Indu
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/bmw.jpg" alt="BMW" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">BMW Model Y</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">APO1AB1234</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">Oil Change</strong>
+                                
+                                
+                            </td>
+                            <td>Not Scheduled</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-pending">Pending</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="/services/admin/requests/52/update/" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="6NQImesFxUxphbLs34lJfNKakyHYiGgx3BDbA7xVaZkvHgPwmVkRngKiVSX4TqP2">
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        
+                                            <option value="Pending" selected>Pending</option>
+                                        
+                                            <option value="In Progress" >In Progress</option>
+                                        
+                                            <option value="Completed" >Completed</option>
+                                        
+                                            <option value="Cancelled" >Cancelled</option>
+                                        
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="/cars/edit/88/" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="/services/admin/requests/52/delete/" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>#51</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="/services/admin/customers/16/" style="color: var(--accent-primary); hover: underline;">
+                                    Indu
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/bmw.jpg" alt="BMW" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">BMW Model Y</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">APO1AB1234</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">Tyre Replacement</strong>
+                                
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Notes:</strong> oil change
+                                    </div>
+                                
+                                
+                            </td>
+                            <td>Aug. 20, 2026</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-in progress">In Progress</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="/services/admin/requests/51/update/" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="6NQImesFxUxphbLs34lJfNKakyHYiGgx3BDbA7xVaZkvHgPwmVkRngKiVSX4TqP2">
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        
+                                            <option value="Pending" >Pending</option>
+                                        
+                                            <option value="In Progress" selected>In Progress</option>
+                                        
+                                            <option value="Completed" >Completed</option>
+                                        
+                                            <option value="Cancelled" >Cancelled</option>
+                                        
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="/cars/edit/88/" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="/services/admin/requests/51/delete/" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>#50</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="/services/admin/customers/13/" style="color: var(--accent-primary); hover: underline;">
+                                    reddy
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/bmw.jpg" alt="BMW" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">BMW Model Y</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">APO1AB1234</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">Oil Change</strong>
+                                
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Notes:</strong> oil change
+                                    </div>
+                                
+                                
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Admin Msg:</strong> accepted
+                                    </div>
+                                
+                            </td>
+                            <td>Aug. 12, 2026</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-in progress">In Progress</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="/services/admin/requests/50/update/" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="6NQImesFxUxphbLs34lJfNKakyHYiGgx3BDbA7xVaZkvHgPwmVkRngKiVSX4TqP2">
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        
+                                            <option value="Pending" >Pending</option>
+                                        
+                                            <option value="In Progress" selected>In Progress</option>
+                                        
+                                            <option value="Completed" >Completed</option>
+                                        
+                                            <option value="Cancelled" >Cancelled</option>
+                                        
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="/cars/edit/80/" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="/services/admin/requests/50/delete/" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>#49</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="/services/admin/customers/15/" style="color: var(--accent-primary); hover: underline;">
+                                    Jane Smith
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/toyota.jpg" alt="Toyota" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">Toyota Supra</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">MH-02-XY-9876</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">Regular Maintenance &amp; Oil Change</strong>
+                                
+                                
+                            </td>
+                            <td>Aug. 13, 2026</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-completed">Completed</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="/services/admin/requests/49/update/" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="6NQImesFxUxphbLs34lJfNKakyHYiGgx3BDbA7xVaZkvHgPwmVkRngKiVSX4TqP2">
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        
+                                            <option value="Pending" >Pending</option>
+                                        
+                                            <option value="In Progress" >In Progress</option>
+                                        
+                                            <option value="Completed" selected>Completed</option>
+                                        
+                                            <option value="Cancelled" >Cancelled</option>
+                                        
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="/cars/edit/83/" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="/services/admin/requests/49/delete/" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>#48</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="/services/admin/customers/14/" style="color: var(--accent-primary); hover: underline;">
+                                    John Doe
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/bmw.jpg" alt="BMW" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">BMW M3</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">KA-01-AB-1234</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">Brake Pads Replacement</strong>
+                                
+                                
+                            </td>
+                            <td>Aug. 16, 2026</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-in progress">In Progress</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="/services/admin/requests/48/update/" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="6NQImesFxUxphbLs34lJfNKakyHYiGgx3BDbA7xVaZkvHgPwmVkRngKiVSX4TqP2">
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        
+                                            <option value="Pending" >Pending</option>
+                                        
+                                            <option value="In Progress" selected>In Progress</option>
+                                        
+                                            <option value="Completed" >Completed</option>
+                                        
+                                            <option value="Cancelled" >Cancelled</option>
+                                        
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="/cars/edit/82/" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="/services/admin/requests/48/delete/" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>#47</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="/services/admin/customers/14/" style="color: var(--accent-primary); hover: underline;">
+                                    John Doe
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/tesla.jpg" alt="Tesla" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">Tesla Model S</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">KA-01-MJ-5678</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">Battery Health Check</strong>
+                                
+                                
+                            </td>
+                            <td>Aug. 18, 2026</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-pending">Pending</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="/services/admin/requests/47/update/" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="6NQImesFxUxphbLs34lJfNKakyHYiGgx3BDbA7xVaZkvHgPwmVkRngKiVSX4TqP2">
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        
+                                            <option value="Pending" selected>Pending</option>
+                                        
+                                            <option value="In Progress" >In Progress</option>
+                                        
+                                            <option value="Completed" >Completed</option>
+                                        
+                                            <option value="Cancelled" >Cancelled</option>
+                                        
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="/cars/edit/81/" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="/services/admin/requests/47/delete/" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>#42</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="/services/admin/customers/10/" style="color: var(--accent-primary); hover: underline;">
+                                    Indu G
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/tesla.jpg" alt="Tesla" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">Tesla x5</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">KA12345</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">Tyre Replacement</strong>
+                                
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Notes:</strong> tyre replacement
+                                    </div>
+                                
+                                
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Admin Msg:</strong> accepted
+                                    </div>
+                                
+                            </td>
+                            <td>Dec. 12, 2009</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-in progress">In Progress</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="/services/admin/requests/42/update/" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="6NQImesFxUxphbLs34lJfNKakyHYiGgx3BDbA7xVaZkvHgPwmVkRngKiVSX4TqP2">
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        
+                                            <option value="Pending" >Pending</option>
+                                        
+                                            <option value="In Progress" selected>In Progress</option>
+                                        
+                                            <option value="Completed" >Completed</option>
+                                        
+                                            <option value="Cancelled" >Cancelled</option>
+                                        
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="/cars/edit/74/" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="/services/admin/requests/42/delete/" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    
+                        <tr>
+                            <td>#41</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="/services/admin/customers/10/" style="color: var(--accent-primary); hover: underline;">
+                                    Indu G
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    
+                                    <img src="static/images/bmw.jpg" alt="BMW" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">BMW model y</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">AP0986</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">General Checkup</strong>
+                                
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Notes:</strong> general checkup
+                                    </div>
+                                
+                                
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Admin Msg:</strong> accepted
+                                    </div>
+                                
+                            </td>
+                            <td>Sept. 8, 2020</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-completed">Completed</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="/services/admin/requests/41/update/" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="6NQImesFxUxphbLs34lJfNKakyHYiGgx3BDbA7xVaZkvHgPwmVkRngKiVSX4TqP2">
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        
+                                            <option value="Pending" >Pending</option>
+                                        
+                                            <option value="In Progress" >In Progress</option>
+                                        
+                                            <option value="Completed" selected>Completed</option>
+                                        
+                                            <option value="Cancelled" >Cancelled</option>
+                                        
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="/cars/edit/72/" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="/services/admin/requests/41/delete/" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        
+    
+</div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Car Service Management System (CSMS). All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
