@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}My Profile - CSMS{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <h2>Edit Profile</h2>
+</div>
+
+<div class="profile-grid">
+    <!-- Left Column: Personal Information -->
+    <div class="card-block">
+        <h3 class="mb-4">Personal Information</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="update_profile" value="1">
+            
+            {% for field in profile_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if field.help_text %}
+                        <div class="help-text">{{ field.help_text }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+        </form>
+    </div>
+
+    <!-- Right Column: Change Password -->
+    <div class="card-block">
+        <h3 class="mb-4">Change Password</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="change_password" value="1">
+            
+            {% for field in password_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="form-error">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if field.help_text %}
+                        <div class="help-text">{{ field.help_text }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary mt-4">Update Password</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

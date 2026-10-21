@@ -1,0 +1,12 @@
+{
+  "name": "car-service-management-system",
+  "version": "1.0.0",
+  "description": "Car Service Management System (CSMS)",
+  "scripts": {
+    "server": "python backend/manage.py runserver",
+    "start": "python backend/manage.py runserver",
+    "dev": "python backend/manage.py runserver"
+  },
+  "author": "",
+  "license": "ISC"
+}

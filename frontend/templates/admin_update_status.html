@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Request Status - CSMS Admin{% endblock %}
+
+{% block content %}
+<div class="auth-box" style="max-width: 600px;">
+    <div class="d-flex align-center gap-2 mb-4">
+        <a href="{% url 'admin_service_requests' %}" style="color: var(--text-muted);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        </a>
+        <h2 style="margin: 0; text-align: left;">Update Request Status</h2>
+    </div>
+    
+    <!-- Request Details Card -->
+    <div style="background-color: var(--input-bg); padding: 1.25rem; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 1.5rem;">
+        <p style="margin-bottom: 0.5rem;"><strong>Request ID:</strong> #{{ service_req.id }}</p>
+        <p style="margin-bottom: 0.5rem;"><strong>Customer:</strong> {{ service_req.user.name }} ({{ service_req.user.email }})</p>
+        <p style="margin-bottom: 0.5rem;"><strong>Car:</strong> {{ service_req.car.car_brand }} {{ service_req.car.car_model }} ({{ service_req.car.car_number }})</p>
+        <p style="margin-bottom: 0.5rem;"><strong>Service Type:</strong> {{ service_req.service_type }}</p>
+        <p style="margin-bottom: 0.5rem;"><strong>Request Date:</strong> {{ service_req.request_date }}</p>
+        <p style="margin-bottom: 0;"><strong>Current Status:</strong> <span class="badge badge-{{ service_req.status|lower }}">{{ service_req.status }}</span></p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="d-flex gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Update Status</button>
+            <a href="{% url 'admin_service_requests' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

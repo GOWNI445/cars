@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - CSMS{% endblock %}
+
+{% block content %}
+<div class="auth-box">
+    <!-- Tabs Header -->
+    <div style="display: flex; border-bottom: 1px solid var(--card-border); margin-bottom: 2rem;">
+        <button type="button" id="tab-customer" onclick="switchTab('customer')" class="tab-btn active" style="flex: 1; padding: 0.75rem; background: none; border: none; color: var(--text-muted); font-weight: 600; font-family: inherit; font-size: 1rem; cursor: pointer; transition: var(--transition);">
+            Customer Login
+        </button>
+        <button type="button" id="tab-admin" onclick="switchTab('admin')" class="tab-btn" style="flex: 1; padding: 0.75rem; background: none; border: none; color: var(--text-muted); font-weight: 600; font-family: inherit; font-size: 1rem; cursor: pointer; transition: var(--transition);">
+            Admin Login
+        </button>
+    </div>
+
+    <h2 id="login-title">Customer Login</h2>
+    <p id="login-subtitle" class="subtitle">Log in to manage your car service dashboard</p>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="login_type" id="login_type" value="customer">
+        
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-primary btn-block mt-4">Login</button>
+    </form>
+    
+    <p id="register-link-section" class="text-center mt-4" style="color: var(--text-muted); font-size: 0.9rem;">
+        Don't have an account? <a href="{% url 'register' %}" style="color: var(--accent-primary); font-weight: 500;">Register here</a>
+    </p>
+
+    <!-- Quick Demo Logins for testing -->
+    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--card-border); text-align: center;">
+        <div id="demo-section">
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">Customer Quick Access (Demo):</p>
+            <button type="button" onclick="loginAs('john@example.com', 'customerpassword')" class="btn btn-secondary btn-sm" style="background-color: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.2); color: var(--accent-primary);">
+                Autofill & Login as Customer
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(role) {
+            const tabCustomer = document.getElementById('tab-customer');
+            const tabAdmin = document.getElementById('tab-admin');
+            const title = document.getElementById('login-title');
+            const subtitle = document.getElementById('login-subtitle');
+            const registerLink = document.getElementById('register-link-section');
+            const demoSection = document.getElementById('demo-section');
+            
+            // Set login type hidden field
+            const loginTypeField = document.getElementById('login_type');
+            if (loginTypeField) {
+                loginTypeField.value = role;
+            }
+
+            // Reset buttons styling
+            tabCustomer.style.borderBottom = "2px solid transparent";
+            tabCustomer.style.color = "var(--text-muted)";
+            tabAdmin.style.borderBottom = "2px solid transparent";
+            tabAdmin.style.color = "var(--text-muted)";
+
+            if (role === 'admin') {
+                tabAdmin.style.borderBottom = "2px solid #6366f1";
+                tabAdmin.style.color = "var(--text-main)";
+                title.innerText = 'Admin Portal Login';
+                subtitle.innerText = 'Log in to access administrative operations';
+                registerLink.style.display = 'none';
+                demoSection.innerHTML = `
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">Admin Quick Access (Demo):</p>
+                    <button type="button" onclick="loginAs('admin@csms.com', 'adminpassword')" class="btn btn-secondary btn-sm" style="background-color: rgba(236, 72, 153, 0.1); border-color: rgba(236, 72, 153, 0.2); color: #ec4899;">
+                        Autofill & Login as Admin
+                    </button>
+                `;
+            } else {
+                tabCustomer.style.borderBottom = "2px solid #6366f1";
+                tabCustomer.style.color = "var(--text-main)";
+                title.innerText = 'Customer Login';
+                subtitle.innerText = 'Log in to manage your car service dashboard';
+                registerLink.style.display = 'block';
+                demoSection.innerHTML = `
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">Customer Quick Access (Demo):</p>
+                    <button type="button" onclick="loginAs('john@example.com', 'customerpassword')" class="btn btn-secondary btn-sm" style="background-color: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.2); color: var(--accent-primary);">
+                        Autofill & Login as Customer
+                    </button>
+                `;
+            }
+        }
+
+        // Initialize styled border on load for active class
+        document.getElementById('tab-customer').style.borderBottom = "2px solid #6366f1";
+        document.getElementById('tab-customer').style.color = "var(--text-main)";
+
+        function loginAs(username, password) {
+            const userInput = document.querySelector('input[name="username"]') || document.querySelector('input[type="text"]');
+            const passwordInput = document.querySelector('input[type="password"]') || document.querySelector('input[name="password"]');
+            if (userInput && passwordInput) {
+                userInput.value = username;
+                passwordInput.value = password;
+                userInput.form.submit();
+            }
+        }
+    </script>
+</div>
+{% endblock %}

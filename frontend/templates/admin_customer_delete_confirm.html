@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Delete Customer - CSMS Admin{% endblock %}
+
+{% block content %}
+<div class="card-block" style="max-width: 600px; margin: 4rem auto; text-align: center;">
+    <h3 style="color: var(--accent-danger); font-size: 1.8rem; margin-bottom: 1rem;">⚠️ Confirm Delete Customer</h3>
+    <p style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 1.5rem;">
+        Are you sure you want to permanently delete customer <strong>{{ customer.name }}</strong> ({{ customer.email }})?
+    </p>
+    <div class="alert alert-error" style="text-align: left; margin-bottom: 2rem; background-color: rgba(239, 68, 68, 0.15); color: var(--accent-danger); border-color: rgba(239, 68, 68, 0.25); border-radius: 8px; padding: 1rem;">
+        <strong>Warning:</strong> Deleting this customer will permanently erase:
+        <ul style="margin-left: 1.5rem; margin-top: 0.5rem; list-style-type: disc;">
+            <li>Their profile account credentials.</li>
+            <li>All of their registered vehicles.</li>
+            <li>Their entire service request history.</li>
+        </ul>
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger" style="margin-right: 0.5rem; padding: 0.6rem 2rem;">Yes, Delete Customer</button>
+        <a href="{% url 'admin_customers' %}" class="btn btn-secondary" style="padding: 0.6rem 2rem;">Cancel</a>
+    </form>
+</div>
+{% endblock %}

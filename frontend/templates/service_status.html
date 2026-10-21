@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}My Service Requests - CSMS{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <h2>Service Request History</h2>
+    <a href="{% url 'request_service' %}" class="btn btn-primary btn-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: -2px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        New Request
+    </a>
+</div>
+
+<!-- Filters & Sorting Bar -->
+<div class="card-block" style="padding: 1.25rem; margin-bottom: 1.5rem;">
+    <form method="GET" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Filter Status</label>
+            <select name="status" class="form-group" style="width: 100%; margin: 0; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+                <option value="">All Statuses</option>
+                <option value="Pending" {% if status_filter == 'Pending' %}selected{% endif %}>Pending</option>
+                <option value="In Progress" {% if status_filter == 'In Progress' %}selected{% endif %}>In Progress</option>
+                <option value="Completed" {% if status_filter == 'Completed' %}selected{% endif %}>Completed</option>
+                <option value="Cancelled" {% if status_filter == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+            </select>
+        </div>
+
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Filter by Vehicle</label>
+            <select name="car" class="form-group" style="width: 100%; margin: 0; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+                <option value="">All Vehicles</option>
+                {% for car in user_cars %}
+                    <option value="{{ car.id }}" {% if car_filter == car.id|stringformat:"i" %}selected{% endif %}>{{ car.car_brand }} {{ car.car_model }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div style="flex: 1; min-width: 200px;">
+            <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Sort By Date</label>
+            <select name="sort" class="form-group" style="width: 100%; margin: 0; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+                <option value="newest" {% if sort_by == 'newest' %}selected{% endif %}>Newest First</option>
+                <option value="oldest" {% if sort_by == 'oldest' %}selected{% endif %}>Oldest First</option>
+            </select>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.5rem; height: 42px;">Apply</button>
+            <a href="{% url 'service_status' %}" class="btn btn-secondary" style="padding: 0.6rem 1.5rem; height: 42px;">Reset</a>
+        </div>
+    </form>
+</div>
+
+<div class="card-block">
+    {% if requests %}
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Car Details</th>
+                        <th>Service Type</th>
+                        <th>Preferred Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in requests %}
+                        <tr>
+                            <td>#{{ req.id }}</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    {% load static %}
+                                    <img src="{% static req.car.car_image_url %}" alt="{{ req.car.car_brand }}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">{{ req.car.car_brand }} {{ req.car.car_model }}</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--accent-info); display: block; margin-top: 0.1rem;">{{ req.car.car_number }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {{ req.service_type }}
+                                {% if req.notes %}
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic; background-color: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 4px; border-left: 3px solid var(--accent-primary);">
+                                        <strong>Notes:</strong> {{ req.notes }}
+                                    </div>
+                                {% endif %}
+                                {% if req.admin_message %}
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.35rem; font-style: italic; background-color: rgba(255,255,255,0.03); padding: 0.4rem 0.6rem; border-radius: 4px; border-left: 3px solid var(--accent-success);">
+                                        <strong>Admin Message:</strong> {{ req.admin_message }}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>{{ req.request_date|default:"Not Scheduled" }}</td>
+                            <td>
+                                <span class="badge badge-{{ req.status|lower }}">{{ req.status }}</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1.5rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <p>No service requests match your criteria.</p>
+            <a href="{% url 'request_service' %}" class="btn btn-primary mt-4">Request Service</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

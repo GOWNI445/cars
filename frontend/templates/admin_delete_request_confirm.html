@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Service Request #{{ req.id }} - CSMS Admin{% endblock %}
+
+{% block content %}
+<div class="auth-box" style="max-width: 600px;">
+    <h2>Confirm Deletion</h2>
+    <p class="subtitle" style="color: var(--accent-danger);">Warning: This action cannot be undone.</p>
+    
+    <div class="card-block" style="background-color: rgba(255,255,255,0.02); border: 1px solid var(--card-border); margin-bottom: 2rem;">
+        <h3 style="font-size: 1.15rem; font-weight: 600; color: var(--text-main); margin-bottom: 1rem;">Service Request details:</h3>
+        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Request ID: <strong>#{{ req.id }}</strong></p>
+        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Customer: <strong>{{ req.user.name }}</strong> ({{ req.user.email }})</p>
+        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Car Details: <strong>{{ req.car.car_brand }} {{ req.car.car_model }}</strong> ({{ req.car.car_number }})</p>
+        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Service Type: <strong>{{ req.service_type }}</strong></p>
+        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Scheduled Date: <strong>{{ req.request_date|default:"Not Scheduled" }}</strong></p>
+        <p style="margin-bottom: 0.5rem; font-size: 0.95rem;">Current Status: <span class="badge badge-{{ req.status|lower }}">{{ req.status }}</span></p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div style="display: flex; gap: 1rem;">
+            <button type="submit" class="btn btn-danger" style="flex: 1;">Yes, Delete Request</button>
+            <a href="{% url 'admin_service_requests' %}" class="btn btn-secondary" style="flex: 1;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

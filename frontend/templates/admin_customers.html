@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Customers List - CSMS Admin{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <h2>Customer Directory</h2>
+    <a href="{% url 'admin_service_requests' %}" class="btn btn-secondary btn-sm">Back to Dashboard</a>
+</div>
+
+<!-- Search Bar -->
+<div class="card-block" style="padding: 1.25rem; margin-bottom: 1.5rem;">
+    <form method="GET" style="display: flex; gap: 1rem; align-items: flex-end;">
+        <div style="flex: 1;">
+            <input type="text" name="q" value="{{ search_query }}" placeholder="Search by name, email, or phone number..." style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+        </div>
+        <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.5rem; height: 42px;">Search</button>
+        {% if search_query %}
+            <a href="{% url 'admin_customers' %}" class="btn btn-secondary" style="padding: 0.6rem 1.5rem; height: 42px;">Reset</a>
+        {% endif %}
+    </form>
+</div>
+
+<div class="card-block">
+    {% if page_obj %}
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email / Username</th>
+                        <th>Phone</th>
+                        <th style="text-align: center;">Cars Registered</th>
+                        <th style="text-align: center;">Role</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for customer in page_obj %}
+                        <tr>
+                            <td>#{{ customer.id }}</td>
+                            <td style="font-weight: 600; color: var(--text-main);">{{ customer.name }}</td>
+                            <td>{{ customer.email }}</td>
+                            <td>{{ customer.phone|default:"N/A" }}</td>
+                            <td style="text-align: center;">
+                                <span style="display: inline-block; background-color: var(--input-bg); border: 1px solid var(--card-border); width: 28px; height: 28px; line-height: 26px; border-radius: 50%; text-align: center; font-weight: 600; color: var(--accent-info);">
+                                    {{ customer.cars_count }}
+                                </span>
+                            </td>
+                            <td style="text-align: center;"><span class="badge badge-{{ customer.role }}">{{ customer.role }}</span></td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="{% url 'admin_customer_detail' customer.id %}" class="btn btn-secondary btn-sm" style="margin-right: 0.25rem;">View</a>
+                                <a href="{% url 'admin_customer_edit' customer.id %}" class="btn btn-secondary btn-sm" style="background-color: rgba(99, 102, 241, 0.1); border-color: rgba(99, 102, 241, 0.2); color: var(--accent-primary); margin-right: 0.25rem;">Edit</a>
+                                <a href="{% url 'admin_customer_delete' customer.id %}" class="btn btn-danger btn-sm" style="padding: 0.25rem 0.5rem; font-size: 0.8rem;">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+            <div class="d-flex justify-between align-center mt-4" style="border-top: 1px solid var(--card-border); padding-top: 1.5rem;">
+                <div style="color: var(--text-muted); font-size: 0.9rem;">
+                    Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </div>
+                <div class="d-flex gap-2">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="btn btn-secondary btn-sm">&laquo; Previous</a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}" class="btn btn-secondary btn-sm">Next &raquo;</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="empty-state">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1.5rem;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <p>No customers found matching your search query.</p>
+            <a href="{% url 'admin_customers' %}" class="btn btn-secondary mt-2">Clear Search</a>
+        </div>
+    {% endif %}
+</div>
+{% block extra_css %}
+<style>
+.badge-customer {
+    background-color: rgba(99, 102, 241, 0.15);
+    color: var(--accent-primary);
+}
+.badge-admin {
+    background-color: rgba(236, 72, 153, 0.15);
+    color: #ec4899;
+}
+</style>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}All Service Requests - CSMS Admin{% endblock %}
+
+{% block content %}
+<div class="section-header">
+    <h2>Service Request Registry</h2>
+
+</div>
+
+<!-- Advanced Search & Filter Bar -->
+<div class="card-block" style="padding: 1.5rem; margin-bottom: 2rem;">
+    <form method="GET" style="display: flex; flex-direction: column; gap: 1rem;">
+        
+        <!-- Row 1: Search Query -->
+        <div style="display: flex; gap: 1rem; align-items: flex-end;">
+            <div style="flex: 1;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Search Requests</label>
+                <input type="text" name="q" value="{{ search_query }}" placeholder="Search by customer name or car register plate number..." style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main);">
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1.5rem; height: 42px;">Apply Search</button>
+        </div>
+
+        <!-- Row 2: Filtering Controls -->
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+            <div style="flex: 1; min-width: 160px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Filter Status</label>
+                <select name="status" style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); height: 42px;">
+                    <option value="">All Statuses</option>
+                    {% for val, label in status_choices %}
+                        <option value="{{ val }}" {% if status_filter == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div style="flex: 1; min-width: 160px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Service Type</label>
+                <select name="service_type" style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); height: 42px;">
+                    <option value="">All Services</option>
+                    {% for val, label in service_type_choices %}
+                        <option value="{{ val }}" {% if service_filter == val %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div style="flex: 1; min-width: 140px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">Start Date</label>
+                <input type="date" name="start_date" value="{{ start_date }}" style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); height: 42px;">
+            </div>
+
+            <div style="flex: 1; min-width: 140px;">
+                <label style="display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted);">End Date</label>
+                <input type="date" name="end_date" value="{{ end_date }}" style="width: 100%; padding: 0.6rem 1rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); height: 42px;">
+            </div>
+
+            <div style="display: flex; gap: 0.5rem;">
+                <a href="{% url 'admin_service_requests' %}" class="btn btn-secondary" style="padding: 0.6rem 1.5rem; height: 42px;">Reset Filters</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="card-block">
+    {% if page_obj %}
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Car Details</th>
+                        <th>Service Details</th>
+                        <th>Request Date</th>
+                        <th style="text-align: center;">Status</th>
+                        <th style="text-align: right; min-width: 180px;">Change Status</th>
+                        <th style="text-align: right; min-width: 200px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in page_obj %}
+                        <tr>
+                            <td>#{{ req.id }}</td>
+                            <td style="font-weight: 600; color: var(--text-main);">
+                                <a href="{% url 'admin_customer_detail' req.user.id %}" style="color: var(--accent-primary); hover: underline;">
+                                    {{ req.user.name }}
+                                </a>
+                            </td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                    {% load static %}
+                                    <img src="{% static req.car.car_image_url %}" alt="{{ req.car.car_brand }}" style="width: 60px; height: 40px; object-fit: cover; border-radius: 6px; border: 1px solid var(--card-border); box-shadow: var(--shadow-sm);">
+                                    <div>
+                                        <span style="font-weight: 600; color: var(--text-main); display: block;">{{ req.car.car_brand }} {{ req.car.car_model }}</span>
+                                        <span style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted); display: block; margin-top: 0.1rem;">{{ req.car.car_number }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <strong style="color: var(--text-main);">{{ req.service_type }}</strong>
+                                {% if req.notes %}
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Notes:</strong> {{ req.notes }}
+                                    </div>
+                                {% endif %}
+                                {% if req.admin_message %}
+                                    <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; font-style: italic;">
+                                        <strong>Admin Msg:</strong> {{ req.admin_message }}
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>{{ req.request_date|default:"Not Scheduled" }}</td>
+                            <td style="text-align: center;">
+                                <span class="badge badge-{{ req.status|lower }}">{{ req.status }}</span>
+                            </td>
+                            <td style="text-align: right;">
+                                <!-- Inline Status Update Dropdown Form -->
+                                <form method="POST" action="{% url 'admin_update_status' req.id %}" style="display: inline-flex; align-items: center; gap: 0.25rem;">
+                                    {% csrf_token %}
+                                    <select name="status" onchange="this.form.submit();" style="padding: 0.4rem 0.6rem; background-color: var(--input-bg); border: 1px solid var(--card-border); border-radius: 6px; color: var(--text-main); font-size: 0.85rem; font-weight: 500; cursor: pointer;">
+                                        {% for val, label in status_choices %}
+                                            <option value="{{ val }}" {% if req.status == val %}selected{% endif %}>{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </form>
+                            </td>
+                            <td style="text-align: right; white-space: nowrap;">
+                                <a href="{% url 'edit_car' req.car.id %}" class="btn btn-secondary btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem; margin-right: 0.25rem;">Edit Car</a>
+                                <a href="{% url 'admin_delete_service_request' req.id %}" class="btn btn-danger btn-sm" style="padding: 0.35rem 0.6rem; font-size: 0.8rem;">Delete Request</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+            <div class="d-flex justify-between align-center mt-4" style="border-top: 1px solid var(--card-border); padding-top: 1.5rem;">
+                <div style="color: var(--text-muted); font-size: 0.9rem;">
+                    Showing page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                </div>
+                <div class="d-flex gap-2">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if service_filter %}&service_type={{ service_filter }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}" class="btn btn-secondary btn-sm">&laquo; Previous</a>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if service_filter %}&service_type={{ service_filter }}{% endif %}{% if start_date %}&start_date={{ start_date }}{% endif %}{% if end_date %}&end_date={{ end_date }}{% endif %}" class="btn btn-secondary btn-sm">Next &raquo;</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="empty-state">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 1.5rem;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            <p>No service requests found matching your filter criteria.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
